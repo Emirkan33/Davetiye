@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -12,13 +13,15 @@
             background: linear-gradient(135deg, #ffe4e6 0%, #fbcfe8 50%, #f472b6 100%);
             min-height: 100vh;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
 
         /* Uçuşan Çiçekler ve Ayıcıklar */
         @keyframes float {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.8; }
-            80% { opacity: 0.8; }
+            20% { opacity: 0.85; }
+            80% { opacity: 0.85; }
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
@@ -29,7 +32,6 @@
             z-index: 1;
         }
 
-        /* Tatlı Buton Animasyonları */
         .btn-yes {
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -40,7 +42,7 @@
 
         @keyframes bounce {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-15px); }
+            100% { transform: translateY(-12px); }
         }
     </style>
 </head>
@@ -50,32 +52,32 @@
     <div id="floating-container" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
 
     <!-- Soru Kartı -->
-    <div id="card" class="relative z-10 bg-white/80 backdrop-blur-md p-8 sm:p-12 rounded-3xl shadow-2xl border-4 border-pink-300 text-center max-w-lg w-full flex flex-col items-center justify-center transition-all duration-300">
+    <div id="card" class="relative z-10 bg-white/85 backdrop-blur-md p-6 sm:p-10 rounded-3xl shadow-2xl border-4 border-pink-300 text-center max-w-lg w-full flex flex-col items-center justify-center transition-all duration-300">
         
-        <!-- Sevimli Görsel / GIF -->
-        <div id="gif-container" class="mb-6 bear-bounce">
-            <img id="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Zudm90NDdybmsxbDF2OXE1bTNndndnMHZqazI4M2V4eW43djN2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Bear" class="w-40 h-40 object-contain drop-shadow-md">
+        <!-- Tatlı Kedi / Ayıcık Görselleri -->
+        <div id="gif-container" class="mb-5 bear-bounce flex justify-center items-center h-44 w-44">
+            <img id="main-gif" src="https://media.tenor.com/gU21wAOFo3cAAAAC/bear-kiss-bear-hug.gif" alt="Cute Bear Cat" class="max-h-full max-w-full object-contain rounded-2xl drop-shadow-md">
         </div>
 
-        <h1 id="question-text" class="text-2xl sm:text-3xl font-bold text-pink-600 mb-8 leading-snug drop-shadow-sm">
+        <h1 id="question-text" class="text-2xl sm:text-3xl font-bold text-pink-600 mb-6 leading-snug">
             Yarın akşam benimle gezer misin? 🧸🌸
         </h1>
 
-        <!-- Butonlar -->
-        <div id="button-group" class="flex flex-wrap items-center justify-center gap-4 w-full relative min-h-[80px]">
-            <button id="yes-btn" onclick="handleYesClick()" class="btn-yes bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-pink-500/40 transform hover:scale-110 active:scale-95 text-lg z-20">
+        <!-- Yan Yana Buton Alanı -->
+        <div id="button-group" class="flex flex-row items-center justify-center gap-4 w-full relative min-h-[90px]">
+            <button id="yes-btn" onclick="handleYesClick()" class="btn-yes bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-pink-500/40 text-lg z-20 whitespace-nowrap">
                 Evet! 🥰
             </button>
-            <button id="no-btn" onclick="handleNoClick()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-full shadow transition-all duration-200 text-base z-10">
+            <button id="no-btn" onclick="handleNoClick()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-full shadow transition-all duration-200 text-base z-10 whitespace-nowrap">
                 Hayır 🥺
             </button>
         </div>
     </div>
 
-    <!-- Kabul Edilince Açılan Ekran -->
-    <div id="success-screen" class="hidden relative z-30 bg-white/90 backdrop-blur-lg p-8 sm:p-12 rounded-3xl shadow-2xl border-4 border-pink-400 text-center max-w-md w-full flex flex-col items-center animate-fade-in">
-        <div class="mb-6 bear-bounce">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3Znd2N3OTdtZ24wcXBqbzU2OHljcGp2b2V3dW1sOHZrbXQ1aDFnbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbxxvDUQM/giphy.gif" alt="Happy Bear" class="w-48 h-48 object-contain drop-shadow-lg">
+    <!-- Kabul Edilince Açılan Başarı Ekranı -->
+    <div id="success-screen" class="hidden relative z-30 bg-white/95 backdrop-blur-lg p-8 sm:p-12 rounded-3xl shadow-2xl border-4 border-pink-400 text-center max-w-md w-full flex flex-col items-center animate-fade-in">
+        <div class="mb-6 bear-bounce flex justify-center items-center h-48 w-48">
+            <img src="https://media.tenor.com/efbo31Yf3GMAAAAC/peach-cat-hug.gif" alt="Happy Cat Hug" class="max-h-full max-w-full object-contain rounded-2xl drop-shadow-lg">
         </div>
         <h2 class="text-3xl font-extrabold text-pink-600 mb-3">Harikasın! 🎉💖</h2>
         <p class="text-xl font-semibold text-gray-700 leading-relaxed">
@@ -87,10 +89,9 @@
         let noCount = 0;
         const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
-        const questionText = document.getElementById('question-text');
         const mainGif = document.getElementById('main-gif');
 
-        // Hayır butonuna basıldığında değişecek tatlı mesajlar
+        // Hayır butonuna basıldığında çıkacak tatlı mesajlar
         const noMessages = [
             "Emin misin? 🥺",
             "Bir daha düşün bence! 🌸",
@@ -98,57 +99,61 @@
             "Bak üzülürüm ama... 💔",
             "Lütfen evet de! 💕",
             "Son kararın mı? 🙈",
-            "Kaçışın yok, evet diyeceksin! 😄"
+            "Kaçışın kalmadı! 😄"
         ];
 
-        // Hayır butonuna basılınca değişecek tatlı ayıcık görselleri
-        const bearGifs = [
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNm4zaHowZnEycTZ0ZWJ4MGY2azA4bWkyaTFkcmkzaW10NjYzbXlybiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9Y1LEFK34BzA4/giphy.gif",
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnllOHZtbmtxMGpjaHowMjl6bXkyenRnd3F2d2lsZHN6bzNzZXljNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/13CoXDiaCcCoyk/giphy.gif",
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWYwZXRjNXhxcWhhbHFiaDF1YWN3dm1uYngyYnZzcXpya3J4MmNtNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/d2lcHJTG5TpwPM4w/giphy.gif"
+        // Hayır'a basıldıkça sırayla değişen %100 çalışan tatlı kedi & ayıcık GIF'leri
+        const cuteGifs = [
+            "https://media.tenor.com/eb434p3vAasAAAAC/cat-please.gif",
+            "https://media.tenor.com/K2124A00s4gAAAAC/sad-bear.gif",
+            "https://media.tenor.com/39aFhYxOqBAAAAAC/cat-crying.gif",
+            "https://media.tenor.com/2m-kQo820a4AAAAC/mochi-cat.gif",
+            "https://media.tenor.com/N2B9S2Dk_jwAAAAC/milk-and-mocha-bear.gif",
+            "https://media.tenor.com/0z-mK9K1-X4AAAAC/crying-cat.gif"
         ];
 
         function handleNoClick() {
             noCount++;
             
-            // Mesajı ve görseli değiştir
+            // Mesaj ve GIF güncelleme
             const msgIndex = Math.min(noCount - 1, noMessages.length - 1);
             noBtn.innerText = noMessages[msgIndex];
             
-            const gifIndex = Math.min(noCount - 1, bearGifs.length - 1);
-            mainGif.src = bearGifs[gifIndex];
+            const gifIndex = Math.min(noCount - 1, cuteGifs.length - 1);
+            mainGif.src = cuteGifs[gifIndex];
 
-            // Evet butonunu aşamalı olarak büyüt
-            if (noCount <= 6) {
-                const newSize = 1 + (noCount * 0.45); // Buton her seferinde %45 büyür
-                const newPaddingY = 12 + (noCount * 10);
-                const newPaddingX = 32 + (noCount * 20);
-                const newFontSize = 18 + (noCount * 6);
+            // Evet butonunu büyüterek sağdaki Hayır butonunun üstüne taşıma/kaplama
+            if (noCount <= 5) {
+                const newScale = 1 + (noCount * 0.55);
+                const newPaddingY = 12 + (noCount * 8);
+                const newPaddingX = 32 + (noCount * 18);
+                const newFontSize = 18 + (noCount * 5);
 
-                yesBtn.style.transform = `scale(${newSize})`;
+                yesBtn.style.transform = `scale(${newScale})`;
                 yesBtn.style.padding = `${newPaddingY}px ${newPaddingX}px`;
                 yesBtn.style.fontSize = `${newFontSize}px`;
             } else {
-                // En sonunda Evet butonu tüm ekranı kaplasın!
+                // Hayır butonuna sürekli basıldığında Evet butonu tüm ekranı kaplar!
                 yesBtn.style.position = 'fixed';
                 yesBtn.style.top = '0';
                 yesBtn.style.left = '0';
                 yesBtn.style.width = '100vw';
                 yesBtn.style.height = '100vh';
-                yesBtn.style.zIndex = '9999';
+                yesBtn.style.zIndex = '99999';
                 yesBtn.style.borderRadius = '0';
-                yesBtn.style.fontSize = '3rem';
+                yesBtn.style.fontSize = '2.8rem';
+                yesBtn.style.display = 'flex';
+                yesBtn.style.alignItems = 'center';
+                yesBtn.style.justifyContent = 'center';
                 yesBtn.innerText = 'EVET! (BAŞKA ÇAREN YOK 💖)';
                 noBtn.style.display = 'none';
             }
         }
 
         function handleYesClick() {
-            // Soru kartını gizle, başarı ekranını göster
             document.getElementById('card').classList.add('hidden');
             document.getElementById('success-screen').classList.remove('hidden');
 
-            // Renkli konfeti patlaması
             const duration = 3 * 1000;
             const end = Date.now() + duration;
 
@@ -174,10 +179,9 @@
             }());
         }
 
-        // Arka planda uçuşan ayıcık ve çiçek simgeleri oluşturma
         function createFloatingElements() {
             const container = document.getElementById('floating-container');
-            const items = ['🌸', '🧸', '🌺', '🌷', '💖', '💐', '🐻'];
+            const items = ['🌸', '🧸', '🐱', '🌷', '💖', '💐', '🐻', '✨'];
 
             setInterval(() => {
                 if (container.childElementCount > 30) return;
@@ -186,9 +190,9 @@
                 element.className = 'floating-element';
                 element.innerText = items[Math.floor(Math.random() * items.length)];
 
-                const size = Math.random() * 20 + 20; // 20px - 40px
+                const size = Math.random() * 20 + 20;
                 const leftPos = Math.random() * 100;
-                const animDuration = Math.random() * 5 + 5; // 5s - 10s
+                const animDuration = Math.random() * 5 + 5;
 
                 element.style.fontSize = `${size}px`;
                 element.style.left = `${leftPos}%`;
