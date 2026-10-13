@@ -5,6 +5,13 @@
     <title>Özel Bir Davet! 🧸🌸</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- EmailJS Kütüphanesi -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("P6my-X1rwuebozDZo"); // Public Key
+        })();
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -120,27 +127,27 @@
         <p class="text-gray-600 mb-6 text-sm font-medium">Aşağıdan favori aktiviteni seçebilirsin:</p>
 
         <div class="grid grid-cols-2 gap-4 w-full mb-6">
-            <div onclick="selectActivity(this, 'yemek')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
+            <div onclick="selectActivity(this, 'Yemek 🍝')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
                 <span class="text-4xl mb-2">🍝</span>
                 <span class="font-bold text-gray-700">Yemek</span>
             </div>
-            <div onclick="selectActivity(this, 'film')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
+            <div onclick="selectActivity(this, 'Film 🎬')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
                 <span class="text-4xl mb-2">🎬</span>
                 <span class="font-bold text-gray-700">Film</span>
             </div>
-            <div onclick="selectActivity(this, 'yuruyus')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
+            <div onclick="selectActivity(this, 'Yürüyüş 🚶‍♀️')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
                 <span class="text-4xl mb-2">🚶‍♀️</span>
                 <span class="font-bold text-gray-700">Yürüyüş</span>
             </div>
-            <div onclick="selectActivity(this, 'oyun')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
+            <div onclick="selectActivity(this, 'Oyun 🎮')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
                 <span class="text-4xl mb-2">🎮</span>
                 <span class="font-bold text-gray-700">Oyun</span>
             </div>
-            <div onclick="selectActivity(this, 'karisik')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
+            <div onclick="selectActivity(this, 'Karışık 🎁')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
                 <span class="text-4xl mb-2">🎁</span>
                 <span class="font-bold text-gray-700">Karışık</span>
             </div>
-            <div onclick="selectActivity(this, 'beyime')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
+            <div onclick="selectActivity(this, 'Beyime bırakıyorum ✨')" class="option-card flex flex-col items-center p-4 border-2 border-pink-200 rounded-2xl bg-pink-50/30">
                 <span class="text-4xl mb-2">✨</span>
                 <span class="font-bold text-gray-700 text-xs sm:text-sm">Beyime bırakıyorum</span>
             </div>
@@ -164,7 +171,10 @@
 
     <script>
         let noCount = 0;
+        let selectedDate = '';
+        let selectedTime = '';
         let selectedActivityType = '';
+        
         const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
         const stickerDisplay = document.getElementById('sticker-display');
@@ -215,16 +225,16 @@
             }
         }
 
-        // 1. Evet butonuna basıldığında tarih ekranına geçiş
         function handleFirstYesClick() {
             document.getElementById('card').classList.add('hidden');
             document.getElementById('date-screen').classList.remove('hidden');
         }
 
-        // Tarih onaylandığında etkinlik ekranına geçiş
         function handleDateSubmit() {
-            const dateVal = document.getElementById('date-input').value;
-            if(!dateVal) {
+            selectedDate = document.getElementById('date-input').value;
+            selectedTime = document.getElementById('time-input').value;
+
+            if(!selectedDate) {
                 alert('Lütfen bir tarih seçebilir misin prenses? 🌸');
                 return;
             }
@@ -232,14 +242,12 @@
             document.getElementById('activity-screen').classList.remove('hidden');
         }
 
-        // Etkinlik seçimi
         function selectActivity(element, type) {
             document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
             element.classList.add('selected');
             selectedActivityType = type;
         }
 
-        // Etkinlik onaylandığında final ekranı ve romantik konfetiler
         function handleActivitySubmit() {
             if(!selectedActivityType) {
                 alert('Lütfen bir aktivite seçmeyi unutma! 🧸');
@@ -248,6 +256,20 @@
 
             document.getElementById('activity-screen').classList.add('hidden');
             document.getElementById('success-screen').classList.remove('hidden');
+
+            // EmailJS ile mail gönderme işlemi
+            const templateParams = {
+                date: selectedDate,
+                time: selectedTime,
+                activity: selectedActivityType
+            };
+
+            emailjs.send('service_1fnwyzh', 'template_bocuyax', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                }, function(error) {
+                    console.log('FAILED...', error);
+                });
 
             // Romantik kırmızı/pembe konfeti şöleni
             const duration = 4 * 1000;
@@ -275,7 +297,6 @@
             }());
         }
 
-        // Arka Planda Uçuşan Romantik Çiçekler ve Ayıcıklar
         function createFloatingElements() {
             const container = document.getElementById('floating-container');
             const items = ['🌸', '🧸', '💖', '🌷', '💐', '🐻', '✨', '🌹', '❤️'];
